@@ -10,21 +10,25 @@ function App() {
   ])
 
   const handleSend = async (text) => {
-    setMessages((prev) => [...prev, { role: 'user', text }])
+  setMessages((prev) => [...prev, { role: 'user', text }])
 
-    try {
-      const response = await axios.post('http://localhost:5000/api/plan-route', {
-        startLocation: text,  
-        destination: 'TBD',
-        batteryPercent: 50
-      })
+  try {
+    const response = await axios.post('http://localhost:5000/api/plan-route', {
+      userMessage: text
+    })
 
-      setMessages((prev) => [...prev, { role: 'ai', text: response.data.recommendation }])
-    } catch (error) {
-      console.error('Error calling backend:', error)
-      setMessages((prev) => [...prev, { role: 'ai', text: 'Something went wrong. Please try again.' }])
-    }
+    setMessages((prev) => [...prev, {
+      role: 'ai',
+      text: response.data.recommendation
+    }])
+  } catch (error) {
+    console.error('Error:', error)
+    setMessages((prev) => [...prev, {
+      role: 'ai',
+      text: 'Something went wrong. Please try again.'
+    }])
   }
+}
 
   return (
     <div className="app-container">

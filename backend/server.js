@@ -3,7 +3,9 @@ const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const axios = require('axios')
 require('dotenv').config()
+
 
 const TripSession = require('./models/TripSession')
 
@@ -25,20 +27,22 @@ app.get('/api/health', (req, res) => {
 
 app.post('/api/plan-route', async (req, res) => {
   try {
-    const { startLocation, destination, batteryPercent } = req.body
+    const { userMessage } = req.body
 
-    const dummyRecommendation = `Test response for trip from ${startLocation} to ${destination} with ${batteryPercent}% battery`
+    const aiResponse = await axios.post('http://localhost:8000/ai-recommend', {
+      userMessage
+    })
+
+    const recommendation = aiResponse.data.recommendation
 
     const session = await TripSession.create({
-      startLocation,
-      destination,
-      batteryPercent,
-      aiRecommendation: dummyRecommendation
+      userMessage,
+      aiRecommendation: recommendation
     })
 
     res.json({
       sessionId: session._id,
-      recommendation: dummyRecommendation
+      recommendation
     })
   } catch (error) {
     console.error('Error in plan-route:', error)
