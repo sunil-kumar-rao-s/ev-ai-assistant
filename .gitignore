@@ -1,6 +1,7 @@
 # Environment variables - never commit these
 .env
 **/.env
+**/.env.local
 
 # Python virtual environment
 ai-service/venv/

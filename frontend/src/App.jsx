@@ -16,7 +16,7 @@ function App() {
     setMessages((prev) => [...prev, { role: 'ai', text: '...' }])
 
     try {
-      const response = await axios.post('http://localhost:5000/api/plan-route', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/plan-route`, {
         userMessage: text
       })
 

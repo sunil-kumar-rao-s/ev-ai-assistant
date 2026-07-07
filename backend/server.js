@@ -29,11 +29,12 @@ app.post('/api/plan-route', async (req, res) => {
   try {
     const { userMessage } = req.body
 
-    const aiResponse = await axios.post('http://localhost:8000/ai-recommend', {
+    const aiResponse = await axios.post(`${process.env.AI_SERVICE_URL}/ai-recommend`, {
       userMessage
     })
 
     const recommendation = aiResponse.data.recommendation
+    const stations = aiResponse.data.stations
 
     const session = await TripSession.create({
       userMessage,
@@ -42,7 +43,8 @@ app.post('/api/plan-route', async (req, res) => {
 
     res.json({
       sessionId: session._id,
-      recommendation
+      recommendation,
+      stations
     })
   } catch (error) {
     console.error('Error in plan-route:', error)

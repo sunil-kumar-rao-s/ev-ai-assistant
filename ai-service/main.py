@@ -38,7 +38,7 @@ Here are real EV charging stations from our database that are relevant
 to their query:
 
 {station_context}
-
+check the shortest travel path from starting point to destination, suggest the charging station along the path, not somewhere far
 Using ONLY the stations listed above, give the user a specific, 
 helpful recommendation. Include:
 - Which station(s) to stop at and why
