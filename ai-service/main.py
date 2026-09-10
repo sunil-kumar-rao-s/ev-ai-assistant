@@ -13,7 +13,7 @@ load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 app = FastAPI()
 
 # ── LLM Setup ──────────────────────────────────────────────
-llm = ChatGroq(model="llama-3.1-8b-instant", api_key=os.getenv("GROQ_API_KEY"))
+llm = ChatGroq(model="llama-3.3-70b-versatile", api_key=os.getenv("GROQ_API_KEY"))
 
 # ── ChromaDB Setup ─────────────────────────────────────────
 chroma_client = chromadb.PersistentClient(path=str(Path(__file__).parent / "chroma_db"))
